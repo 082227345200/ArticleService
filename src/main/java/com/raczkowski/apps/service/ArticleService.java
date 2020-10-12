@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class ArticleService {
    ArticlesDao articlesDao;
-   ArticleCreator articleCreator;
+   ArticleCreator articleCreator = new ArticleCreator();
 
     public ArticleService(ArticlesDao articlesDao) {
         this.articlesDao = articlesDao;

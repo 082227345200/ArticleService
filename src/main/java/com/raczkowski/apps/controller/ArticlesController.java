@@ -37,10 +37,8 @@ public class ArticlesController extends HttpServlet {
         response.getWriter().write(String.valueOf(articleService.getArticlesById(id)));
     }
 
-    @RequestMapping(value = "/add/{title}&{content}", method = RequestMethod.POST,produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public void addNewArticle(@PathVariable String title, @PathVariable String content, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        logger.info("Got request parameters: " + request.getParameterMap());
+    @RequestMapping(value = "/addArticle/{title}&{content}",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public void addNewArticle(@PathVariable ("title") String title, @PathVariable ("content")String content, HttpServletResponse response) throws IOException {
         articleService.addArticle(title, content);
         response.getWriter().write("Saved");
     }
