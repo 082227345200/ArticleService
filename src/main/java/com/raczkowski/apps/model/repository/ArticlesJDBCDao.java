@@ -51,7 +51,6 @@ public class ArticlesJDBCDao implements ArticlesDao {
                 Date localDate = rs.getDate("localdate");
                 Article article = new Article(id, title, content, author, localDate.toLocalDate());
                 articles.add(article);
-
             }
             statement.close();
 
