@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="articles.css" type="text/css">
+</head>
+<body>
+<style>
+    body {
+        background-image: url('lol.jpeg');
+        background-size: 100%;
+        background-repeat: no-repeat;
+    }
+</style>
+<nav class="nav">
+    <div class="container1">
+        <div class="logo">
+            <a href="#">BLOG</a>
+        </div>
+        <div class="main_list" id="mainListDiv">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">My articles</a></li>
+                <li><a href="#">My Profile</a></li>
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Hi, Bartek</a></li>
+            </ul>
+        </div>
+        <div class="media_button">
+            <button class="main_media_button" id="mediaButton">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </div>
+    <div class="container2">
+        <div class="article" id="1"></div>
+        <div class="article" id="2"></div>
+    </div>
+</nav>
+<script>
+    let res = new Response();
+    fetch('http://localhost:8080/articles/all',{mode:'no-cors'})
+        .then(resp => resp.json())
+</script>
+</div>
+</body>
+</html>
