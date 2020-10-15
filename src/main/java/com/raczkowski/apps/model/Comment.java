@@ -4,14 +4,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.time.LocalDate;
-
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
-public class Article {
-
+public class Comment {
     @JsonProperty("id")
     private final int id;
-    @JsonProperty("title")
-    private final String title;
+    @JsonProperty("idOfArticle")
+    private final int idOfArticle;
     @JsonProperty("content")
     private final String content;
     @JsonProperty("author")
@@ -19,9 +17,9 @@ public class Article {
     @JsonProperty("localDate")
     private final LocalDate localDate;
 
-    public Article(int id, String title, String content, String author, LocalDate localDate) {
+    public Comment(int id, int idOfArticle, String content, String author, LocalDate localDate) {
         this.id = id;
-        this.title = title;
+        this.idOfArticle = idOfArticle;
         this.content = content;
         this.author = author;
         this.localDate = localDate;
@@ -31,8 +29,8 @@ public class Article {
         return id;
     }
 
-    public String getTitle() {
-        return title;
+    public int getIdOfArticle() {
+        return idOfArticle;
     }
 
     public String getContent() {
@@ -49,13 +47,12 @@ public class Article {
 
     @Override
     public String toString() {
-        return "Article { " +
-                "id = " + id +
-                ", title = " + title +
+        return "Comment{ " +
+                " id =" + id +
+                ", idOfArticle = " + idOfArticle +
                 ", content = " + content +
                 ", author = " + author +
                 ", localDate = " + localDate +
-                '}' + '\n';
+                '}'+'\n';
     }
-
 }

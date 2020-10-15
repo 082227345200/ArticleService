@@ -1,6 +1,7 @@
 package com.raczkowski.apps.controller;
 
 import com.raczkowski.apps.model.Article;
+import com.raczkowski.apps.model.Comment;
 import com.raczkowski.apps.service.ArticleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +44,12 @@ public class ArticlesController extends HttpServlet {
     public void addNewArticle(@PathVariable("title") String title, @PathVariable("content") String content, HttpServletResponse response) throws IOException {
         articleService.addArticle(title, content);
         response.getWriter().write("Saved");
+    }
+
+    @GetMapping(value = "/comments/{idOfArticle}")
+    @ResponseBody
+    public List<Comment> getCommentsOfArticle(@PathVariable int idOfArticle) {
+        return articleService.getCommentsOfArticle(idOfArticle);
     }
 
     @GetMapping(value = "/newest")
