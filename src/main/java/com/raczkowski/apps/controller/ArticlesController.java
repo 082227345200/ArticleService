@@ -4,6 +4,8 @@ import com.raczkowski.apps.model.Article;
 import com.raczkowski.apps.service.ArticleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,9 +39,27 @@ public class ArticlesController extends HttpServlet {
         response.getWriter().write(String.valueOf(articleService.getArticlesById(id)));
     }
 
-    @RequestMapping(value = "/addArticle/{title}&{content}",method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public void addNewArticle(@PathVariable ("title") String title, @PathVariable ("content")String content, HttpServletResponse response) throws IOException {
+    @RequestMapping(value = "/addArticle/{title}&{content}", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
+    public void addNewArticle(@PathVariable("title") String title, @PathVariable("content") String content, HttpServletResponse response) throws IOException {
         articleService.addArticle(title, content);
         response.getWriter().write("Saved");
+    }
+
+    @GetMapping(value = "/newest")
+    @ResponseBody
+    public List<Article> getNewestArticle() {
+        return articleService.getNewestArticle();
+    }
+
+    @GetMapping(value = "/{author}")
+    @ResponseBody
+    public List<Article> getNewestArticle(@PathVariable String author) {
+        return articleService.getArticleOfAuthor(author);
+    }
+
+    @GetMapping(value = "/sort/{choice}")
+    @ResponseBody
+    public List<Article> getSortedArticles(@PathVariable String choice, HttpServletResponse response) {
+        return articleService.sortArticles(choice);
     }
 }
