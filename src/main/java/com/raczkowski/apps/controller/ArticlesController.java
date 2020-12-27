@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -27,39 +28,43 @@ public class ArticlesController extends HttpServlet {
     }
 
     @GetMapping(value = "/all", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public List<Article> getAllArticles() {
-        return articleService.getAllArticles();
+    ResponseEntity <List<Article>> getAllArticles() {
+        return ResponseEntity.ok(articleService.getAllArticles());
     }
 
-    @GetMapping(value = "/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    @ResponseBody
-    public void getAllArticlesById(@PathVariable String id, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        logger.info("Got request parameters: " + request.getParameterMap());
-        response.getWriter().write(String.valueOf(articleService.getArticlesById(id)));
+    @GetMapping(value = "/id/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<Article> getAllArticlesById(@PathVariable String id){
+        return ResponseEntity.ok(articleService.getArticlesById(id));
     }
 
-    @RequestMapping(value = "/addArticle/{title}&{content}", method = RequestMethod.POST, produces = {MediaType.APPLICATION_JSON_VALUE})
-    public void addNewArticle(@PathVariable("title") String title, @PathVariable("content") String content, HttpServletResponse response) throws IOException {
+    @PostMapping(value = "/add")
+    ResponseEntity<?> addNewArticle(@PathVariable("title") String title, @PathVariable("content") String content, HttpServletResponse response) throws IOException {
         articleService.addArticle(title, content);
-        response.getWriter().write("Saved");
+        return ResponseEntity.ok("saved");
     }
+
+    //Todo: Napisać nowa metodę do pobierania najnowszego artykułu, aktualnie metoda pobiera artyguły z localdate.now
 
     @GetMapping(value = "/newest")
-    @ResponseBody
     public List<Article> getNewestArticle() {
         return articleService.getNewestArticle();
     }
 
     @GetMapping(value = "/{author}")
-    @ResponseBody
-    public List<Article> getNewestArticle(@PathVariable String author) {
-        return articleService.getArticleOfAuthor(author);
+    ResponseEntity<?> getNewestArticle(@PathVariable String author) {
+        if (articleService.getArticleOfAuthor(author).isEmpty()) {
+            return new ResponseEntity<>("There are no articles for author:" + author, HttpStatus.OK);
+        } else {
+            return ResponseEntity.ok(articleService.getArticleOfAuthor(author));
+        }
     }
 
     @GetMapping(value = "/sort/{choice}")
-    @ResponseBody
-    public List<Article> getSortedArticles(@PathVariable String choice, HttpServletResponse response) {
-        return articleService.sortArticles(choice);
+    ResponseEntity<?> getSortedArticles(@PathVariable String choice) {
+        if (articleService.sortArticles(choice) != null) {
+            return ResponseEntity.ok(articleService.sortArticles(choice));
+        } else {
+            return new ResponseEntity<>("Illegal param: " + choice, HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 }

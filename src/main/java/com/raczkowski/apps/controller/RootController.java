@@ -6,6 +6,8 @@ import com.raczkowski.apps.model.repository.UsersDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServlet;
@@ -27,12 +29,17 @@ public class RootController extends HttpServlet {
 
     LogIn logIn = new LogIn();
 
+    //todo: Naprawić to bo źle działa
+
     @GetMapping(value = "/api")
     @ResponseBody
-    public void Login(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        logger.info("Got request parameters: " + request.getParameterMap());
+    ResponseEntity<?> Login(HttpServletRequest request) {
         String email = request.getParameter(EMAIL_PARAM);
         String password = request.getParameter(PASSWORD_PARAM);
-        response.getWriter().write(String.valueOf(logIn.logIn(usersDao,email,password)));
+        if (logIn.logIn(usersDao, email, password) != null) {
+            return new ResponseEntity<>("Email or password are wrong, try again", HttpStatus.NOT_FOUND);
+        } else {
+            return ResponseEntity.ok(logIn.logIn(usersDao, email, password));
+        }
     }
 }

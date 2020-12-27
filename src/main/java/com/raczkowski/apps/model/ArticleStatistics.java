@@ -51,12 +51,12 @@ public class ArticleStatistics {
 
     public List<Article> articlesFilter(String choice) {
         List<Article> articlesSorted = new ArrayList<>(articlesDao.loadArticles());
-        if(!choice.equals("Asc") && !choice.equals("Desc")) {
+        if(!choice.equalsIgnoreCase("asc") && !choice.equalsIgnoreCase("Desc")) {
             return null;
         } else {
             Article temporaryArticle;
             if (articlesSorted.size() > 1) {
-                if (choice.equals("Asc")) {
+                if (choice.equalsIgnoreCase("Asc")) {
                     for (int i = 0; i < articlesSorted.size(); i++) {
                         for (int j = 0; j < articlesSorted.size() - 1; j++) {
                             if (articlesSorted.get(j).getLocalDate().
@@ -67,7 +67,7 @@ public class ArticleStatistics {
                             }
                         }
                     }
-                } else if (choice.equals("Desc")) {
+                } else if (choice.equalsIgnoreCase("Desc")) {
                     for (int i = 0; i < articlesSorted.size(); i++) {
                         for (int j = 0; j < articlesSorted.size() - 1; j++) {
                             if (articlesSorted.get(j).getLocalDate().
