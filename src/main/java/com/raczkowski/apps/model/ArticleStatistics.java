@@ -5,17 +5,32 @@ import com.raczkowski.apps.model.repository.ArticlesJDBCDao;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
 
 import static java.time.LocalDate.now;
+
 @Service
 public class ArticleStatistics {
-    ArticlesDao articlesDao = new ArticlesJDBCDao();
+    private ArticlesDao articlesDao = new ArticlesJDBCDao();
+    private DateComparator dateComparator = new DateComparator();
 
     public List<Article> articlesFromToday() {
         return getArticlesForPredicate(article -> article.getLocalDate().equals(now()));
+    }
+
+    public List<Article> getNewestArticle() {
+        List<Article> newestArticle = new ArrayList<>();
+        Article firstArticle = articlesDao.loadArticles().get(0);
+        List<Article> articles = articlesDao.loadArticles();
+        for (int i = 0; i < articles.size(); i++) {
+            if (dateComparator.compare(articles.get(i).getLocalDate(), firstArticle.getLocalDate()) > 0) {
+                newestArticle.add(articles.get(i));
+            }
+        }
+        return newestArticle;
     }
 
     public List<Article> articlesOfAuthor(String author) {
@@ -51,7 +66,7 @@ public class ArticleStatistics {
 
     public List<Article> articlesFilter(String choice) {
         List<Article> articlesSorted = new ArrayList<>(articlesDao.loadArticles());
-        if(!choice.equalsIgnoreCase("asc") && !choice.equalsIgnoreCase("Desc")) {
+        if (!choice.equalsIgnoreCase("asc") && !choice.equalsIgnoreCase("Desc")) {
             return null;
         } else {
             Article temporaryArticle;

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.net.http.HttpRequest;
 import java.util.List;
 
 @RestController
@@ -28,26 +29,29 @@ public class ArticlesController extends HttpServlet {
     }
 
     @GetMapping(value = "/all", produces = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity <List<Article>> getAllArticles() {
+    ResponseEntity<List<Article>> getAllArticles() {
         return ResponseEntity.ok(articleService.getAllArticles());
     }
 
     @GetMapping(value = "/id/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<Article> getAllArticlesById(@PathVariable String id){
+    ResponseEntity<Article> getAllArticlesById(@PathVariable String id) {
         return ResponseEntity.ok(articleService.getArticlesById(id));
     }
 
     @PostMapping(value = "/add")
-    ResponseEntity<?> addNewArticle(@PathVariable("title") String title, @PathVariable("content") String content, HttpServletResponse response) throws IOException {
+    ResponseEntity<?> addNewArticle(@PathVariable("title") String title, @PathVariable("content") String content){
         articleService.addArticle(title, content);
         return ResponseEntity.ok("saved");
     }
 
-    //Todo: Napisać nowa metodę do pobierania najnowszego artykułu, aktualnie metoda pobiera artyguły z localdate.now
+    @GetMapping(value = "/today")
+    ResponseEntity<List<Article>> getArticleFromToday() {
+        return ResponseEntity.ok(articleService.getArticleFromToday());
+    }
 
     @GetMapping(value = "/newest")
-    public List<Article> getNewestArticle() {
-        return articleService.getNewestArticle();
+    ResponseEntity<List<Article>> getNewestArticle() {
+        return ResponseEntity.ok(articleService.getNewestArticle());
     }
 
     @GetMapping(value = "/{author}")

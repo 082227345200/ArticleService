@@ -10,9 +10,9 @@ import java.util.List;
 
 @Service
 public class ArticleService {
-    ArticlesDao articlesDao;
-    ArticleCreator articleCreator = new ArticleCreator();
-    ArticleStatistics articleStatistics = new ArticleStatistics();
+    private ArticlesDao articlesDao;
+    private ArticleCreator articleCreator = new ArticleCreator();
+    private ArticleStatistics articleStatistics = new ArticleStatistics();
 
 
     public ArticleService(ArticlesDao articlesDao) {
@@ -32,6 +32,10 @@ public class ArticleService {
     }
 
     public List<Article> getNewestArticle() {
+        return articleStatistics.getNewestArticle();
+    }
+
+    public List<Article> getArticleFromToday() {
         return articleStatistics.articlesFromToday();
     }
 
