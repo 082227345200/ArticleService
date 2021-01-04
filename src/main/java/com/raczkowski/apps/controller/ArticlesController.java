@@ -2,8 +2,6 @@ package com.raczkowski.apps.controller;
 
 import com.raczkowski.apps.model.Article;
 import com.raczkowski.apps.service.ArticleService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,17 +10,12 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.net.http.HttpRequest;
 import java.util.List;
 
 @RestController
 @RequestMapping(value = "/articles")
 public class ArticlesController extends HttpServlet {
-    private final ArticleService articleService;
-    private final Logger logger = LoggerFactory.getLogger(ArticlesController.class);
+    private ArticleService articleService;
 
     public ArticlesController(ArticleService articleService) {
         this.articleService = articleService;
@@ -39,7 +32,7 @@ public class ArticlesController extends HttpServlet {
     }
 
     @PostMapping(value = "/add")
-    ResponseEntity<?> addNewArticle(@PathVariable("title") String title, @PathVariable("content") String content){
+    ResponseEntity<?> addNewArticle(@RequestParam String title, @RequestParam String content) {
         articleService.addArticle(title, content);
         return ResponseEntity.ok("saved");
     }
@@ -69,6 +62,16 @@ public class ArticlesController extends HttpServlet {
             return ResponseEntity.ok(articleService.sortArticles(choice));
         } else {
             return new ResponseEntity<>("Illegal param: " + choice, HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @PatchMapping(value = "/delete/{id}")
+    ResponseEntity<?> removeArticle(@PathVariable int id) {
+        if (articleService.getArticlesById(String.valueOf(id)) != null) {
+            articleService.removeArticle(id);
+            return ResponseEntity.ok("Removed");
+        } else {
+            return new ResponseEntity<>("Article with " + id + " not found", HttpStatus.NOT_FOUND);
         }
     }
 }

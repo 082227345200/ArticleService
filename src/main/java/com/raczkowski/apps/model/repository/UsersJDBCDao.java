@@ -60,7 +60,6 @@ public class UsersJDBCDao implements UsersDao {
             String user = "postgres";
             String password = "Tajfun";
             conn = DriverManager.getConnection(url, user, password);
-            System.out.println("Connected to Articles DataBase.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

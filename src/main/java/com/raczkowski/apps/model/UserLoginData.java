@@ -1,11 +1,16 @@
 package com.raczkowski.apps.model;
 
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class UserLoginData {
-    private final String email;
-    private final String password;
-    private final String name;
-    private final String surname;
+    private String email;
+    private String password;
+    private String name;
+    private String surname;
+
+    public UserLoginData() {
+    }
 
     public UserLoginData(String name, String surname, String email, String password) {
         this.name = name;

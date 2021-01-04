@@ -1,8 +1,10 @@
 package com.raczkowski.apps.model;
 
+import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.Comparator;
-
+@Service
 public class DateComparator implements Comparator<LocalDate> {
     @Override
     public int compare(LocalDate localDate1, LocalDate localDate2) {

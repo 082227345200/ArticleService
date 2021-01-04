@@ -9,7 +9,6 @@ import java.util.List;
 public class LogIn {
     public UserLoginData logIn(UsersDao userRepository, String email, String password) {
         List<User> users = userRepository.loadUsers();
-
         User loggedInUser;
         for (User user : users) {
             if (email.equalsIgnoreCase(user.getMail())) {

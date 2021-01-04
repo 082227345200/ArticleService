@@ -33,11 +33,11 @@ public class User {
         return name;
     }
 
-    public String getLastName() {
+    String getLastName() {
         return lastName;
     }
 
-    public String getMail() {
+    String getMail() {
         return eMail;
     }
 

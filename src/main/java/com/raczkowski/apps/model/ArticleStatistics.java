@@ -1,11 +1,9 @@
 package com.raczkowski.apps.model;
 
 import com.raczkowski.apps.model.repository.ArticlesDao;
-import com.raczkowski.apps.model.repository.ArticlesJDBCDao;
 import org.springframework.stereotype.Service;
 
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
@@ -14,8 +12,13 @@ import static java.time.LocalDate.now;
 
 @Service
 public class ArticleStatistics {
-    private ArticlesDao articlesDao = new ArticlesJDBCDao();
-    private DateComparator dateComparator = new DateComparator();
+    private final ArticlesDao articlesDao;
+    private final DateComparator dateComparator;
+
+    public ArticleStatistics(ArticlesDao articlesDao, DateComparator dateComparator) {
+        this.articlesDao = articlesDao;
+        this.dateComparator = dateComparator;
+    }
 
     public List<Article> articlesFromToday() {
         return getArticlesForPredicate(article -> article.getLocalDate().equals(now()));
