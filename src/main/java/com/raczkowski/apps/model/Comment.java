@@ -53,6 +53,6 @@ public class Comment {
                 ", content = " + content +
                 ", author = " + author +
                 ", localDate = " + localDate +
-                '}'+'\n';
+                '}' + '\n';
     }
 }

@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.Connection;
+
 @Repository
 public class ArticlesJDBCDao implements ArticlesDao {
 
@@ -101,7 +102,7 @@ public class ArticlesJDBCDao implements ArticlesDao {
             String user = "postgres";
             String password = "Tajfun";
             conn = DriverManager.getConnection(url, user, password);
-           // System.out.println("Connected to Articles DataBase.");
+            // System.out.println("Connected to Articles DataBase.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

@@ -46,11 +46,18 @@ public class UsersJDBCDao implements UsersDao {
                 users.add(user);
             }
             statement.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return users;
+    }
+
+    //ToDo: make a method to update data about user
+
+    @Override
+    public void updateUserData(String email, String password, String name, String surname) {
+        Connection connection = connect();
+        Statement statement;
     }
 
     private Connection connect() {
@@ -63,7 +70,6 @@ public class UsersJDBCDao implements UsersDao {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
         return conn;
     }
 }
