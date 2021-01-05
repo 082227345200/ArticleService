@@ -10,12 +10,12 @@ import java.util.List;
 @Repository
 public class CommentsJDBCDao implements CommentsDao {
     @Override
-    public void addComment(Comment comment, Article article) {
+    public void addComment(Comment comment, int idOdArticle) {
         Connection connection = connect();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO comments(id, idofarticle, content, author, localdate) VALUES (?,?,?,?,?)");
             preparedStatement.setInt(1, showComment().size());
-            preparedStatement.setInt(2, article.getId());
+            preparedStatement.setInt(2, idOdArticle);
             preparedStatement.setString(3, comment.getContent());
             preparedStatement.setString(4, comment.getAuthor());
             preparedStatement.setDate(5, Date.valueOf(comment.getLocalDate()));

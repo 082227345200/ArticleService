@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface CommentsDao {
-    void addComment(Comment comment, Article article);
+    void addComment(Comment comment, int idOfArticle);
 
     List<Comment> showComment();
 

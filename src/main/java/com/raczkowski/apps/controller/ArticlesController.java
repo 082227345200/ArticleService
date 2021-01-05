@@ -26,8 +26,8 @@ public class ArticlesController extends HttpServlet {
         return ResponseEntity.ok(articleService.getAllArticles());
     }
 
-    @GetMapping(value = "/id/{id}", produces = {MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<Article> getAllArticlesById(@PathVariable String id) {
+    @GetMapping(value = "/id", produces = {MediaType.APPLICATION_JSON_VALUE})
+    ResponseEntity<Article> getAllArticlesById(@RequestParam String id) {
         return ResponseEntity.ok(articleService.getArticlesById(id));
     }
 
@@ -56,8 +56,8 @@ public class ArticlesController extends HttpServlet {
         }
     }
 
-    @GetMapping(value = "/sort/{choice}")
-    ResponseEntity<?> getSortedArticles(@PathVariable String choice) {
+    @GetMapping(value = "/sort")
+    ResponseEntity<?> getSortedArticles(@RequestParam String choice) {
         if (articleService.sortArticles(choice) != null) {
             return ResponseEntity.ok(articleService.sortArticles(choice));
         } else {
@@ -65,8 +65,8 @@ public class ArticlesController extends HttpServlet {
         }
     }
 
-    @PatchMapping(value = "/delete/{id}")
-    ResponseEntity<?> removeArticle(@PathVariable int id) {
+    @PatchMapping(value = "/delete")
+    ResponseEntity<?> removeArticle(@RequestParam int id) {
         if (articleService.getArticlesById(String.valueOf(id)) != null) {
             articleService.removeArticle(id);
             return ResponseEntity.ok("Removed");
