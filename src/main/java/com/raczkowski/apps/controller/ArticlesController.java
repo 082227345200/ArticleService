@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/articles")
 public class ArticlesController extends HttpServlet {
-    private ArticleService articleService;
+    private final ArticleService articleService;
 
     public ArticlesController(ArticleService articleService) {
         this.articleService = articleService;

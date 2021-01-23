@@ -1,8 +1,6 @@
 package com.raczkowski.apps.model.repository;
 
-
 import com.raczkowski.apps.model.User;
-import com.raczkowski.apps.model.UserLoginData;
 import com.raczkowski.apps.model.UserRegistrationData;
 import org.springframework.stereotype.Repository;
 
@@ -52,12 +50,27 @@ public class UsersJDBCDao implements UsersDao {
         return users;
     }
 
-    //ToDo: make a method to update data about user
-
     @Override
-    public void updateUserData(String email, String password, String name, String surname) {
+    public void updateUserData(int id, String email, String password, String name, String lastName) {
         Connection connection = connect();
-        Statement statement;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("UPDATE users SET (name, lastName, email, password) VALUES (?,?,?,?) WHERE id=" + id);
+            if (name != null) {
+                preparedStatement.setString(1, name);
+            }
+            if (lastName != null) {
+                preparedStatement.setString(2, lastName);
+            }
+            if (email != null) {
+                preparedStatement.setString(3, email);
+            }
+            if (password != null) {
+                preparedStatement.setString(4, password);
+            }
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     private Connection connect() {

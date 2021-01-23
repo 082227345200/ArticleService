@@ -1,6 +1,7 @@
 package com.raczkowski.apps.controller;
 
 import com.raczkowski.apps.model.LogIn;
+import com.raczkowski.apps.model.User;
 import com.raczkowski.apps.model.repository.UsersDao;
 
 import com.raczkowski.apps.service.UserService;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServlet;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api")
@@ -37,9 +39,14 @@ public class RootController extends HttpServlet {
     }
 
     @PatchMapping(value = "/update")
-    ResponseEntity<?> updateUserData(@RequestParam String email, @RequestParam String password
-            , @RequestParam String name, @RequestParam String surname) {
-        userService.updateUserData(email, password, name, surname);
+    ResponseEntity<?> updateUserData(@RequestParam int id,@RequestParam String email, @RequestParam String password
+            , @RequestParam String name, @RequestParam String lastName) {
+        userService.updateUserData(id,email, password, name, lastName);
         return ResponseEntity.ok("User data updated");
+    }
+
+    @GetMapping(value = "/all")
+    ResponseEntity<List<User>> loadUsers (){
+        return ResponseEntity.ok(userService.loadUsers());
     }
 }

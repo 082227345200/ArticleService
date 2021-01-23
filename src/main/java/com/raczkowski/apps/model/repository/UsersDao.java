@@ -2,7 +2,6 @@ package com.raczkowski.apps.model.repository;
 
 
 import com.raczkowski.apps.model.User;
-import com.raczkowski.apps.model.UserLoginData;
 import com.raczkowski.apps.model.UserRegistrationData;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +14,5 @@ public interface UsersDao {
 
     List<User> loadUsers();
 
-    void updateUserData(String email, String password, String name, String surname);
+    void updateUserData(int id, String email, String password, String name, String lastName);
 }
