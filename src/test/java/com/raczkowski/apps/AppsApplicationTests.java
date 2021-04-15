@@ -8,6 +8,11 @@ class AppsApplicationTests {
 
 	@Test
 	void contextLoads() {
+		//given:
+
+		//when:
+
+		//then:
 	}
 
 }
